@@ -32,20 +32,34 @@ While executing scripts, first ensure that your main project directory is in PYT
 - Preprocess VQA datasets by executing: `./scripts/preprocess.sh`    
     
 ### Training baseline model
-Execute `./scripts/baseline/vqacp2_baseline.sh`.
+We are providing [pre-trained models for both VQAv2 and VQA-CPv2 here](https://drive.google.com/drive/folders/1pEqgN7uM_FbjUf6VCPGsHnsGvl5oEbcX?usp=sharing)
 
-- *Note#1: We will be using the pre-trained baseline model to train HINT/SCR and our regularizer.*
+To train the baselines yourself execute `./scripts/baseline/vqacp2_baseline.sh`.
+
+- *Note#1: We need pre-trained baseline model to train HINT/SCR and our regularizer.*
 - *Note#2: We need to train baselines on 100% of the training set. However, by default, the training script expects to train only on subset with visual hints (e.g., HAT or textual explanations).
 So, to train baseline, we need to use the flag `--do_not_discard_items_without_hints`, otherwise it will throw an error message saying that `hint_type` flag is missing.*
 
-### Training models that do well on VQA-CP
+### Training state-of-the-art models
 
 #### Setting up data
+- Download visual cues/hints from https://drive.google.com/drive/folders/1fkydOF-_LRpXK1ecgst5XujhyQdE6It7?usp=sharing into the following directory:
+`${DATA_DIR}/hints`
+   - The shared folder contains Human Attention Map-based cues and Textual Explanations-based cues
+   - The folder contains 3 versions for each type of cue: a) relevant cues (original) b) irrelevant cues (1 - relevant) c) random cues 
 
 #### Training HINT [1]
- 
+Execute `./scripts/hint/vqacp2_hint.sh` for VQACPv2
+
+Execute `./scripts/hint/vqa2_hint.sh` for VQAv2
  
 #### Training SCR [2]
+Execute `./scripts/scr/vqacp2_scr.sh` for VQACPv2
+
+Execute `./scripts/scr/vqa2_scr.sh` for VQAv2
+
+*Note: By default, HINT and SCR are only trained on subset with visual cues. To train on full dataset, please specify `--do_not_discard_items_without_hints` flag.* 
+
 
 #### Training our regularizer 
 
