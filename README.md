@@ -2,6 +2,10 @@
 Recent works in VQA attempt to improve visual grounding by training the model to attend to query-relevant visual regions. Such methods
  have claimed impressive gains in challenging datasets such as VQA-CP. However, in this work we show that boosts in performance come from a regularization effect as opposed to proper visual grounding.
 
+
+![Visual Grounding](./images/visual_grounding.jpg)
+
+
 This repo is based on [Self-Critical Reasoning codebase](https://github.com/jialinwu17/self_critical_vqa). 
 
 
@@ -48,7 +52,10 @@ So, to train baseline, we need to use the flag `--do_not_discard_items_without_h
    - The shared folder contains Human Attention Map-based cues and Textual Explanations-based cues
    - The folder contains 3 versions for each type of cue: a) relevant cues (original) b) irrelevant cues (1 - relevant) c) random cues 
 
+The following scripts train HINT/SCR with a) relevant cues b) irrelevant cues c) fixed random cues and d) varying random cues: 
+
 #### Training HINT [1]
+
 Execute `./scripts/hint/vqacp2_hint.sh` for VQACPv2
 
 Execute `./scripts/hint/vqa2_hint.sh` for VQAv2
