@@ -1,30 +1,28 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -e
-source activate ${ENV_NAME}
-source common.sh
+source scripts/common.sh
 
-expt=baseline_vqa2
-#
+dataset=vqa2
+expt=baseline_${dataset}
+mkdir -p ${SAVE_DIR}/${expt}
+
+## Train
 CUDA_VISIBLE_DEVICES=0 python -u main.py \
---dataset vqa2 \
+--data_dir ${DATA_DIR} \
+--dataset ${dataset} \
 --split train \
---split_test val \
+--split_test test \
 --max_epochs 40 \
---checkpoint_path ${SAVE_DIR}/${expt} > ${LOG_DIR}/${expt}.log
+--do_not_discard_items_without_hints \
+--checkpoint_path ${SAVE_DIR}/${expt} > ${SAVE_DIR}/${expt}/verbose_log.txt
 
-## To test
-#CUDA_VISIBLE_DEVICES=0 python -u main.py \
-#--dataset vqa2 \
-#--split train \
-#--split_test val \
-#--max_epochs 40 \
-#--checkpoint_path ${SAVE_DIR}/${expt} > ${LOG_DIR}/${expt}.log
-
-#CUDA_VISIBLE_DEVICES=0 python -u main.py \
-#--dataset vqa2 \
-#--split train \
-#--hint_type hat \
-#--split_test val \
-#--checkpoint_path saved_models/${expt} \
-#--load_checkpoint_path saved_models/${expt}/model-best.pth \
-#--test
+## Test
+CUDA_VISIBLE_DEVICES=0 python -u main.py \
+--data_dir ${DATA_DIR} \
+--dataset ${dataset} \
+--test \
+--split train \
+--split_test test \
+--do_not_discard_items_without_hints \
+--checkpoint_path ${SAVE_DIR}/${expt} \
+--load_checkpoint_path ${SAVE_DIR}/${expt}/model-best.pth > ${SAVE_DIR}/${expt}/test_verbose_log.txt

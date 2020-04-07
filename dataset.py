@@ -170,7 +170,8 @@ class SelfCriticalDataset(Dataset):
             f = os.path.join(self.data_dir, f'vqacp_v2_{self.split}_questions.json')
             return json.load(open(f))
         elif self.opt.dataset == 'vqa2':
-            f = os.path.join(self.data_dir, f'v2_OpenEnded_mscoco_{self.split}2014_questions.json')
+            year = '2015' if self.split == 'test' else '2014'
+            f = os.path.join(self.data_dir, f'v2_OpenEnded_mscoco_{self.split}{year}_questions.json')
             return json.load(open(f))['questions']
 
     def get_annotations(self):
@@ -178,7 +179,8 @@ class SelfCriticalDataset(Dataset):
             f = os.path.join(self.data_dir, f'vqacp_v2_{self.split}_annotations.json')
             return json.load(open(f))
         elif self.opt.dataset == 'vqa2':
-            f = os.path.join(self.data_dir, f'v2_mscoco_{self.split}2014_annotations.json')
+            year = '2015' if self.split == 'test' else '2014'
+            f = os.path.join(self.data_dir, f'v2_mscoco_{self.split}{year}_annotations.json')
             return json.load(open(f))['annotations']
 
     def get_datalen(self):
