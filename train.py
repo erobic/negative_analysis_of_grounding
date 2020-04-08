@@ -513,7 +513,7 @@ def run(model,
     optim = create_optim(opt, model)
     lr_scheduler = ExponentialLR(optim, gamma=opt.lr_gamma)
     best_eval_score = 0
-    ans_cossim = pickle.load(open('ans_cossim.pkl', 'rb'))
+    ans_cossim = pickle.load(open(f'{opt.data_dir}/ans_cossim.pkl', 'rb'))
     log_file = open(opt.checkpoint_path + '/log.txt', 'a')
     print(json.dumps(vars(opt), indent=4, sort_keys=True), file=log_file)
     log_file.flush()

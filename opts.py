@@ -4,7 +4,7 @@ import argparse
 def parse_opt():
     parser = argparse.ArgumentParser()
     # Data input settings
-    parser.add_argument('--data_dir')
+    parser.add_argument('--data_dir', type=str, required=True)
     parser.add_argument('--dataset', type=str, default='vqacp2', choices=['vqa2', 'vqacp2'])
     parser.add_argument('--do_not_discard_items_without_hints', action='store_true')
     parser.add_argument('--split', type=str, default='v2cp_train',

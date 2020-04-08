@@ -33,7 +33,8 @@ While executing scripts, first ensure that your main project directory is in PYT
 - Inside `scripts/common.sh`, edit `DATA_DIR` variable by assigning it the path where you wish to download all data 
 - Download UpDn features from [google drive](https://drive.google.com/drive/folders/1IXTsTudZtYLqmKzsXxIZbXfCnys_Izxr?usp=sharing) into `${DATA_DIR}` folder
 - Download questions/answers for VQAv2 and VQA-CPv2 by executing `./scripts/download.sh`
-- Preprocess VQA datasets by executing: `./scripts/preprocess.sh`    
+- Preprocess VQA datasets by executing: `./scripts/preprocess.sh`
+- Download [`ans_cossim.pkl`](https://drive.google.com/drive/folders/10JzwFZY4KgOMqJjb4GIXhuUXO8dnQvIC?usp=sharing) and place it into `${DATA_DIR}`     
     
 ### Training baseline model
 We are providing [pre-trained models for both VQAv2 and VQA-CPv2 here](https://drive.google.com/drive/folders/1pEqgN7uM_FbjUf6VCPGsHnsGvl5oEbcX?usp=sharing)
@@ -68,10 +69,17 @@ Execute `./scripts/scr/vqa2_scr.sh` for VQAv2
 *Note: By default, HINT and SCR are only trained on subset with visual cues. To train on full dataset, please specify `--do_not_discard_items_without_hints` flag.* 
 
 
-#### Training our regularizer 
+#### Training our 'zero-out' regularizer 
+- Execute `./scripts/our_zero_out_regularizer/vqacp2_zero_out_full.sh` to train with our regularizer on 100% of VQACPv2
+- Execute `./scripts/our_zero_out_regularizer/vqacp2_zero_out_subset.sh` to train with our regularizer on a subset of VQACPv2
+- Execute `./scripts/our_zero_out_regularizer/vqa2_zero_out_full.sh` to train with our regularizer on 100% of VQAv2
+- Execute `./scripts/our_zero_out_regularizer/vqa2_zero_out_subset.sh` to train with our regularizer on a subset of VQAv2
+
 
 ### Analysis
 #### Computing rank correlation
+Please refer to `scripts/analysis/compute_rank_correlation.sh` for sample scripts that can be used to compute rank correlations. 
+The script uses the object sensitivity files generated during the training/evaluation. 
 
 #### Visualizing with Grad-Cam
 

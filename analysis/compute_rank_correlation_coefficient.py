@@ -3,115 +3,19 @@ import pickle
 import json
 import os
 import numpy as np
-
+import argparse
 
 if __name__ == "__main__":
-    expt_configs = {
-        # Baselines
-        'baseline_vqa2': {
-            'sensitivity_file': 'test_qid_to_gt_ans_sensitivities_epoch_35',
-            'hint_type': 'hat'
-        },
-        'baseline_vqacp2': {
-            'sensitivity_file': 'test_qid_to_gt_ans_sensitivities_epoch_28',
-            'hint_type': 'hat'
-        },
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--data_dir', type=str, required=True)
+    parser.add_argument('--sensitivity_file', type=str, required=True)
+    parser.add_argument('--hint_type', type=str, required=True)
+    args = parser.parse_args()
 
-        # HINT
-        'HINT_hat_vqa2': {
-            'sensitivity_file': 'qid_to_gt_ans_sensitivities_epoch_7',
-            'hint_type': 'hat'
-        },
-        'HINT_one_minus_hat_vqa2': {
-            'sensitivity_file': 'qid_to_gt_ans_sensitivities_epoch_7',
-            'hint_type': 'hat'
-        },
-        'HINT_random_hat_vqa2': {
-            'sensitivity_file': 'qid_to_gt_ans_sensitivities_epoch_7',
-            'hint_type': 'hat'
-        },
-        'HINT_hat_var_rand_vqa2': {
-            'sensitivity_file': 'qid_to_gt_ans_sensitivities_epoch_7',
-            'hint_type': 'hat'
-        },
-        'HINT_hat_vqacp2_seed1': {
-            'sensitivity_file': 'qid_to_gt_ans_sensitivities_epoch_7',
-            'hint_type': 'hat'
-        },
-        'HINT_one_minus_hat_vqacp2_seed1': {
-            'sensitivity_file': 'qid_to_gt_ans_sensitivities_epoch_7',
-            'hint_type': 'hat'
-        },
-        'HINT_random_hat_vqacp2_seed1': {
-            'sensitivity_file': 'qid_to_gt_ans_sensitivities_epoch_7',
-            'hint_type': 'hat'
-        },
-        'HINT_hat_var_rand_vqacp2_seed1': {
-            'sensitivity_file': 'qid_to_gt_ans_sensitivities_epoch_7',
-            'hint_type': 'hat'
-        },
 
-        # SCR
-        'scr_caption_based_hints_vqacp2_seed4000/phase_3': {
-            'sensitivity_file': 'qid_to_gt_ans_sensitivities_epoch_7',
-            'hint_type': 'caption_based_hints'
-        },
-        'scr_one_minus_caption_based_hints_vqacp2_seed4000/phase_3': {
-            'sensitivity_file': 'qid_to_gt_ans_sensitivities_epoch_7',
-            'hint_type': 'caption_based_hints'
-        },
-        'scr_random_caption_based_hints_vqacp2_seed4000/phase_3': {
-            'sensitivity_file': 'qid_to_gt_ans_sensitivities_epoch_7',
-            'hint_type': 'caption_based_hints'
-        },
-        'scr_random_caption_based_hints_var_rand_vqacp2_seed4000/phase_3': {
-            'sensitivity_file': 'qid_to_gt_ans_sensitivities_epoch_7',
-            'hint_type': 'caption_based_hints'
-        },
-
-        # SCR on VQAv2
-        'scr_caption_based_hints_vqa2/phase_3': {
-            'sensitivity_file': 'qid_to_all_ans_sensitivities_epoch_7',
-            'hint_type': 'caption_based_hints'
-        },
-        'scr_one_minus_caption_based_hints_vqa2/phase_3': {
-            'sensitivity_file': 'qid_to_all_ans_sensitivities_epoch_7',
-            'hint_type': 'caption_based_hints'
-        },
-        'scr_random_caption_based_hints_vqa2/phase_3': {
-            'sensitivity_file': 'qid_to_all_ans_sensitivities_epoch_7',
-            'hint_type': 'caption_based_hints'
-        },
-        'scr_random_caption_based_hints_vqa2_var_rand/phase_3': {
-            'sensitivity_file': 'qid_to_all_ans_sensitivities_epoch_7',
-            'hint_type': 'caption_based_hints'
-        },
-
-        # Ours
-        'vqacp2_fixed_gt_ans_fixed_rand_ratio_0.01': {
-            'sensitivity_file': 'test_qid_to_gt_ans_sensitivities_epoch_6',
-            'hint_type': 'hat' # Did not use during training, just checking correlations anyways
-        },
-        'vqa2_fixed_gt_ans_full': {
-            'sensitivity_file': 'test_qid_to_gt_ans_sensitivities_epoch_6',
-            'hint_type': 'hat'  # Did not use during training, just checking correlations anyways
-        }
-    }
-
-    root = '/hdd/robik/projects/self_critical_vqa'
-    expt_name = 'vqa2_fixed_gt_ans_full'
-    scores_name = expt_configs[expt_name]['sensitivity_file']
-    hint_type = expt_configs[expt_name]['hint_type']
-
-    if os.path.exists(os.path.join(root, 'saved_models', expt_name, 'sensitivities', scores_name + '.pkl')):
-        pred_scores = pickle.load(
-            open(os.path.join(root, 'saved_models', expt_name, 'sensitivities', scores_name + '.pkl'), 'rb'))
-    else:
-        pred_scores = pickle.load(
-            open(os.path.join(root, 'saved_models', expt_name, 'sensitivities', scores_name + '.json'), 'rb'))
-
-    train_gt_scores = pickle.load(open(os.path.join(root, 'data', 'hints', f'train_{hint_type}.pkl'), 'rb'))
-    val_gt_scores = pickle.load(open(os.path.join(root, 'data', 'hints', f'val_{hint_type}.pkl'), 'rb'))
+    sensitivity_scores = pickle.load(open(args.sensitivity_file, 'rb'))
+    train_gt_scores = pickle.load(open(os.path.join(args.data_dir, 'hints', f'train_{args.hint_type}.pkl'), 'rb'))
+    val_gt_scores = pickle.load(open(os.path.join(args.data_dir, 'hints', f'val_{args.hint_type}.pkl'), 'rb'))
     gt_scores = {}
     for qid in train_gt_scores:
         gt_scores[qid] = train_gt_scores[qid]
@@ -121,20 +25,18 @@ if __name__ == "__main__":
     total_coef, total_p, total_num = 0, 0, 0
     not_found = 0
 
-    for qid in pred_scores:
+    for qid in sensitivity_scores:
         if qid in gt_scores:
             _gt_scores = gt_scores[qid].tolist()
-            _pred_scores = pred_scores[qid]
-            coef, p = spearmanr(_gt_scores, _pred_scores)
+            _qid_sensitivity_scores = sensitivity_scores[qid]
+            coef, p = spearmanr(_gt_scores, _qid_sensitivity_scores)
             if np.isnan(coef):
                 continue
             total_coef += coef
             total_p += p
             total_num += 1
         else:
-            # print(f"{qid} not found")
             not_found += 1
-    # print(f"not found {not_found}")
     coef = total_coef / total_num
     p = total_p / total_num
     print(f"Coefficient {coef} p =  {p} total_num {total_num} not_Found {not_found}")
