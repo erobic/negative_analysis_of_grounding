@@ -594,7 +594,7 @@ def run(model,
 
         if epoch in opt.log_epochs:
             eval_score = evaluate_and_log("Eval", model, eval_loader_all, opt, epoch, log_file,
-                                          save_sensitivities=False,
+                                          save_sensitivities=True,
                                           save_prediction_scores=True)
         else:
             eval_score = evaluate_and_log("Eval", model, eval_loader_all, opt, epoch, log_file,
