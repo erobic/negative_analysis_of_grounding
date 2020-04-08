@@ -2,8 +2,8 @@
 set -e
 source scripts/common.sh
 
-dataset=vqacp2
-split_test=test
+dataset=vqa2
+split_test=val
 
 expt=${dataset}_zero_out_full
 mkdir -p ${SAVE_DIR}/${expt}
