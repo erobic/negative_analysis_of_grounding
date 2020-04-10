@@ -6,6 +6,7 @@ dataset=vqacp2
 split_test=test
 
 scr_loss_weight=3
+
 scr_compare_loss_weight=1000
 
 for hint_type in caption_based_hints one_minus_caption_based_hints random_caption_based_hints; do
@@ -43,7 +44,7 @@ for hint_type in caption_based_hints one_minus_caption_based_hints random_captio
     --scr_compare_loss_weight ${scr_compare_loss_weight} > ${SAVE_DIR}/${expt}/phase_3/verbose_log.txt
 done
 
-
+hint_type=random_caption_based_hints
 expt=scr_variable_${hint_type}_${dataset}
 mkdir -p ${SAVE_DIR}/${expt}/phase_2
 
@@ -60,7 +61,7 @@ CUDA_VISIBLE_DEVICES=0 python -u main.py \
 --load_checkpoint_path ${SAVE_DIR}/baseline_${dataset}/model-best.pth \
 --use_scr_loss \
 --scr_hint_loss_weight ${scr_loss_weight} \
---change_scores_every_epoch > ${SAVE_DIR}/${expt}/phase2/verbose_log.txt
+--change_scores_every_epoch > ${SAVE_DIR}/${expt}/phase_2/verbose_log.txt
 
 mkdir -p ${SAVE_DIR}/${expt}/phase_3
 learning_rate=1e-4
