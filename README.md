@@ -81,8 +81,6 @@ Execute `./scripts/scr/vqa2_scr.sh` for VQAv2
 Please refer to `scripts/analysis/compute_rank_correlation.sh` for sample scripts that can be used to compute rank correlations. 
 The script uses the object sensitivity files generated during the training/evaluation. 
 
-#### Visualizing with Grad-Cam
-
 ### References
 
 [1] Selvaraju, Ramprasaath R., et al. "Taking a hint: Leveraging explanations to make vision and language models more grounded." Proceedings of the IEEE International Conference on Computer Vision. 2019.
