@@ -86,3 +86,13 @@ The script uses the object sensitivity files generated during the training/evalu
 [1] Selvaraju, Ramprasaath R., et al. "Taking a hint: Leveraging explanations to make vision and language models more grounded." Proceedings of the IEEE International Conference on Computer Vision. 2019.
 
 [2] Wu, Jialin, and Raymond Mooney. "Self-Critical Reasoning for Robust Visual Question Answering." Advances in Neural Information Processing Systems. 2019.
+
+Citation
+```
+@article{shrestha2020negative,
+  title={A negative case analysis of visual grounding methods for VQA},
+  author={Shrestha, Robik and Kafle, Kushal and Kanan, Christopher},
+  journal={arXiv preprint arXiv:2004.05704},
+  year={2020}
+}
+```
