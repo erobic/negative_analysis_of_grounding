@@ -87,7 +87,7 @@ The script uses the object sensitivity files generated during the training/evalu
 
 [2] Wu, Jialin, and Raymond Mooney. "Self-Critical Reasoning for Robust Visual Question Answering." Advances in Neural Information Processing Systems. 2019.
 
-Citation
+### Citation
 ```
 @inproceedings{shrestha-etal-2020-negative,
     title = "A negative case analysis of visual grounding methods for {VQA}",
